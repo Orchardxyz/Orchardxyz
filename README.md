@@ -1,4 +1,8 @@
-<img src="./profile/stats.svg" align="right" />
+<picture align="right">
+  <source srcset="./profile/stats-dark.svg" media="(prefers-color-scheme: dark)" />
+  <source srcset="./profile/stats.svg" media="(prefers-color-scheme: light)" />
+  <img src="./profile/stats.svg" alt="GitHub stats card" />
+</picture>
 
 ### Hi there 👋
 
