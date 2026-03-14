@@ -4,6 +4,8 @@ import path from 'node:path';
 
 const TOKEN = process.env.PERSONAL_GH_TOKEN || process.env.GITHUB_TOKEN;
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR;
+const SHOW_LANG_DIAG = process.env.SHOW_LANG_DIAG === '1';
+const LANG_ACTIVE_MONTHS = Number(process.env.LANG_ACTIVE_MONTHS || 12);
 
 if (!TOKEN) {
   console.error('Missing token: set PERSONAL_GH_TOKEN (preferred) or GITHUB_TOKEN');
@@ -140,9 +142,16 @@ async function listRepos() {
 
 async function getLanguages(username) {
   const repos = await listRepos(username);
+  const cutoff = new Date();
+  cutoff.setUTCMonth(cutoff.getUTCMonth() - LANG_ACTIVE_MONTHS);
+  const activeRepos = repos.filter(repo => repo.pushed_at && new Date(repo.pushed_at) >= cutoff);
   const totals = new Map();
-  for (const repo of repos) {
+  const perRepo = [];
+  for (const repo of activeRepos) {
     const langs = await githubFetch(repo.languages_url);
+    const entries = Object.entries(langs);
+    const repoTotal = entries.reduce((sum, [, v]) => sum + v, 0);
+    perRepo.push({ name: repo.full_name, entries, total: repoTotal });
     for (const [lang, bytes] of Object.entries(langs)) {
       totals.set(lang, (totals.get(lang) || 0) + bytes);
     }
@@ -153,6 +162,21 @@ async function getLanguages(username) {
   const othersBytes = entries.slice(3).reduce((sum, [, v]) => sum + v, 0);
   if (othersBytes > 0) {
     top3.push({ name: 'Others', bytes: othersBytes, pct: (othersBytes / totalBytes) * 100 });
+  }
+  if (SHOW_LANG_DIAG) {
+    console.log('Language diagnostics (per repo, top langs):');
+    console.log(`Filtered to repos updated since ${cutoff.toISOString().slice(0, 10)} (${activeRepos.length}/${repos.length}).`);
+    perRepo
+      .filter(r => r.total > 0)
+      .sort((a, b) => b.total - a.total)
+      .forEach(r => {
+        const formatted = r.entries
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 5)
+          .map(([lang, bytes]) => `${lang} ${(bytes / r.total * 100).toFixed(1)}%`)
+          .join(', ');
+        console.log(`- ${r.name}: total ${r.total} bytes; ${formatted}`);
+      });
   }
   return top3;
 }
