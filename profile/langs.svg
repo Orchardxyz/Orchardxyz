@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="467" height="200" viewBox="0 0 467 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="titleLang descLang">
   <title id="titleLang">Orchardxyz's Top Languages (past year)</title>
-  <desc id="descLang">Top languages by bytes over the past year. TypeScript 81%, JavaScript 16%, Python 3%.</desc>
+  <desc id="descLang">Top languages by bytes over the past year. TypeScript 76%, HTML 7%, JavaScript 7%, Others 10%.</desc>
   <rect x="0.5" y="0.5" width="466" height="199" rx="12" fill="#ffffff" stroke="#d0d7de" />
   <g transform="translate(18, 26)" font-family="'Segoe UI', Ubuntu, Sans-Serif" fill="#1f2328">
     <text x="0" y="0" font-size="16" font-weight="700">Languages (Top 3, past year)</text>
   </g>
   <g>
     <circle cx="150" cy="110" r="62" fill="#f3f4f6" />
-    <path d="M 150 48 A 62 62 0 1 1 92.35385787492842 87.17627773354994 L 116.52804650802295 96.74751610335159 A 36 36 0 1 0 150 74 Z" fill="#3178c6" />
-    <path d="M 92.35385787492842 87.17627773354994 A 62 62 0 0 1 138.38235849568514 49.09819045482129 L 143.25427267491395 74.6376589737672 A 36 36 0 0 0 116.52804650802295 96.74751610335159 Z" fill="#f1e05a" />
-    <path d="M 138.38235849568514 49.09819045482129 A 62 62 0 0 1 150.00000000000006 48 L 150.00000000000003 74 A 36 36 0 0 0 143.25427267491395 74.6376589737672 Z" fill="#3572a5" />
+    <path d="M 150 48 A 62 62 0 1 1 88.12234283744716 106.1069877891826 L 114.07103777658222 107.73954129694474 A 36 36 0 1 0 150 74 Z" fill="#3178c6" />
+    <path d="M 88.12234283744716 106.1069877891826 A 62 62 0 0 1 95.66898583728045 80.13127220569368 L 118.45295951842091 92.65686773233826 A 36 36 0 0 0 114.07103777658222 107.73954129694474 Z" fill="#e34c26" />
+    <path d="M 95.66898583728045 80.13127220569368 A 62 62 0 0 1 113.55731435786666 59.84094634875326 L 128.83973091747097 80.8753882025019 A 36 36 0 0 0 118.45295951842091 92.65686773233826 Z" fill="#f1e05a" />
+    <path d="M 113.55731435786666 59.84094634875326 A 62 62 0 0 1 150 48 L 150 74 A 36 36 0 0 0 128.83973091747097 80.8753882025019 Z" fill="#9ca3af" />
     <circle cx="150" cy="110" r="36" fill="#ffffff" />
     <text x="150" y="106" text-anchor="middle" font-family="'Segoe UI', Ubuntu, Sans-Serif" font-size="13" font-weight="700" fill="#1f2328">TypeScript</text>
-    <text x="150" y="124" text-anchor="middle" font-family="'Segoe UI', Ubuntu, Sans-Serif" font-size="12" fill="#4b5563">81%</text>
+    <text x="150" y="124" text-anchor="middle" font-family="'Segoe UI', Ubuntu, Sans-Serif" font-size="12" fill="#4b5563">76%</text>
   </g>
   <g font-family="'Segoe UI', Ubuntu, Sans-Serif" font-size="13" fill="#1f2328" transform="translate(240, 70)">
     <g transform="translate(0, 0)">
   <rect x="0" y="-10" width="12" height="12" rx="2" fill="#3178c6" />
-  <text x="18" y="0" dominant-baseline="middle">TypeScript — 81%</text>
+  <text x="18" y="0" dominant-baseline="middle">TypeScript — 76%</text>
 </g>
     <g transform="translate(0, 26)">
-  <rect x="0" y="-10" width="12" height="12" rx="2" fill="#f1e05a" />
-  <text x="18" y="0" dominant-baseline="middle">JavaScript — 16%</text>
+  <rect x="0" y="-10" width="12" height="12" rx="2" fill="#e34c26" />
+  <text x="18" y="0" dominant-baseline="middle">HTML — 7%</text>
 </g>
     <g transform="translate(0, 52)">
-  <rect x="0" y="-10" width="12" height="12" rx="2" fill="#3572a5" />
-  <text x="18" y="0" dominant-baseline="middle">Python — 3%</text>
+  <rect x="0" y="-10" width="12" height="12" rx="2" fill="#f1e05a" />
+  <text x="18" y="0" dominant-baseline="middle">JavaScript — 7%</text>
+</g>
+    <g transform="translate(0, 78)">
+  <rect x="0" y="-10" width="12" height="12" rx="2" fill="#9ca3af" />
+  <text x="18" y="0" dominant-baseline="middle">Others — 10%</text>
 </g>
   </g>
 </svg>
