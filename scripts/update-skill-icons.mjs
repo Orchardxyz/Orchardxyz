@@ -3,7 +3,8 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const TOKEN = process.env.PERSONAL_GH_TOKEN || process.env.GITHUB_TOKEN || '';
+const PERSONAL_TOKEN = process.env.PERSONAL_GH_TOKEN || '';
+const TOKEN = PERSONAL_TOKEN || process.env.GITHUB_TOKEN || '';
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR;
 const LANG_ACTIVE_MONTHS = Number(process.env.LANG_ACTIVE_MONTHS || 12);
 const MAX_SKILL_ICONS = Number(process.env.MAX_SKILL_ICONS || 6);
@@ -46,7 +47,7 @@ if (!USERNAME) {
   process.exit(1);
 }
 
-function createHeaders(extra = {}) {
+function createHeaders({ includeAuth = true, extra = {} } = {}) {
   const headers = {
     'User-Agent': 'orchard-readme-stack',
     Accept: 'application/vnd.github+json',
@@ -54,15 +55,15 @@ function createHeaders(extra = {}) {
     ...extra,
   };
 
-  if (TOKEN) {
+  if (includeAuth && TOKEN) {
     headers.Authorization = `Bearer ${TOKEN}`;
   }
 
   return headers;
 }
 
-async function githubFetch(url) {
-  const res = await fetch(url, { headers: createHeaders() });
+async function githubFetch(url, options = {}) {
+  const res = await fetch(url, { headers: createHeaders(options) });
 
   if (!res.ok) {
     const msg = await res.text();
@@ -77,10 +78,15 @@ async function listRepos() {
   let page = 1;
 
   while (true) {
-    const url = TOKEN
-      ? `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner&visibility=all&sort=updated`
-      : `https://api.github.com/users/${encodeURIComponent(USERNAME)}/repos?per_page=100&page=${page}&type=owner&sort=updated`;
-    const data = await githubFetch(url);
+    const authenticatedUrl = `https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner&visibility=all&sort=updated`;
+    const publicUrl = `https://api.github.com/users/${encodeURIComponent(USERNAME)}/repos?per_page=100&page=${page}&type=owner&sort=updated`;
+    let data;
+
+    if (PERSONAL_TOKEN) {
+      data = await githubFetch(authenticatedUrl);
+    } else {
+      data = await githubFetch(publicUrl, { includeAuth: false });
+    }
     const ownedRepos = data.filter(repo => !repo.fork);
     repos.push(...ownedRepos);
 

@@ -22,6 +22,7 @@ jobs:
       - name: Update recent stack
         run: node scripts/update-skill-icons.mjs
         env:
+          PERSONAL_GH_TOKEN: ${{ secrets.PERSONAL_GH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USERNAME: ${{ github.repository_owner }}
           LANG_ACTIVE_MONTHS: 12
