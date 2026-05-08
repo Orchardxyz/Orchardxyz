@@ -27,9 +27,9 @@
  Top languages · past year
  
  <!-- START:recent-stack -->
- <p>
-   <a href="https://skillicons.dev">
-     <img src="https://skillicons.dev/icons?i=ts,js,html,css" alt="Recent top languages: TypeScript, JavaScript, HTML, CSS" />
-   </a>
- </p>
- <!-- END:recent-stack -->
+<p>
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=ts,js,html,rust,swift,css" alt="Recent top languages: TypeScript, JavaScript, HTML, Rust, Swift, CSS" />
+  </a>
+</p>
+<!-- END:recent-stack -->
