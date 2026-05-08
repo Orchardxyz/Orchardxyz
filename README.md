@@ -11,10 +11,16 @@
  
  <p>
    <a href="https://github.com/Orchardxyz" aria-label="GitHub">
-     <img src="./profile/github-link.svg" alt="GitHub" width="20" height="20" />
+     <picture>
+       <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/github.svg#svgView(preserveAspectRatio(none))" />
+       <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/github.svg" alt="GitHub" width="20" height="20" />
+     </picture>
    </a>
    <a href="mailto:orchardyz@outlook.com" aria-label="Email">
-     <img src="./profile/email-link.svg" alt="Email" width="20" height="20" />
+     <picture>
+       <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/envelope.svg#svgView(preserveAspectRatio(none))" />
+       <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/envelope.svg" alt="Email" width="20" height="20" />
+     </picture>
    </a>
  </p>
  
