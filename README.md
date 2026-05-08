@@ -10,18 +10,14 @@
 <!-- END:readme-typing -->
  
  <p>
-   <a href="https://github.com/Orchardxyz" aria-label="GitHub">
-     <picture>
+   <a href="https://github.com/Orchardxyz" aria-label="GitHub"><picture>
        <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/github.svg#svgView(preserveAspectRatio(none))" />
        <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/github.svg" alt="GitHub" width="20" height="20" />
-     </picture>
-   </a>
-   <a href="mailto:orchardyz@outlook.com" aria-label="Email">
-     <picture>
+     </picture></a>
+   <a href="mailto:orchardyz@outlook.com" aria-label="Email"><picture>
        <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/envelope.svg#svgView(preserveAspectRatio(none))" />
        <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/envelope.svg" alt="Email" width="20" height="20" />
-     </picture>
-   </a>
+     </picture></a>
  </p>
  
  Top languages · past year
