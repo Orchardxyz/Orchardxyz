@@ -1,7 +1,7 @@
 <!-- START:readme-typing -->
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com/?lines=Make+it+happen.&amp;font=SF+Mono&amp;size=20&amp;width=260&amp;height=28&amp;duration=2500&amp;pause=1000&amp;repeat=false&amp;vCenter=true&amp;background=00000000&amp;color=E5E7EB" />
-  <img src="https://readme-typing-svg.demolab.com/?lines=Make+it+happen.&amp;font=SF+Mono&amp;size=20&amp;width=260&amp;height=28&amp;duration=2500&amp;pause=1000&amp;repeat=false&amp;vCenter=true&amp;background=00000000&amp;color=111827" alt="Make it happen." />
+  <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com/?lines=Make+it+happen.&amp;font=SF+Mono&amp;size=20&amp;width=260&amp;height=28&amp;duration=2500&amp;pause=1000&amp;repeat=true&amp;vCenter=true&amp;background=00000000&amp;color=E5E7EB" />
+  <img src="https://readme-typing-svg.demolab.com/?lines=Make+it+happen.&amp;font=SF+Mono&amp;size=20&amp;width=260&amp;height=28&amp;duration=2500&amp;pause=1000&amp;repeat=true&amp;vCenter=true&amp;background=00000000&amp;color=111827" alt="Make it happen." />
 </picture>
 <!-- END:readme-typing -->
 

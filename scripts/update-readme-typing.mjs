@@ -36,7 +36,7 @@ function buildTypingUrl(color) {
   url.searchParams.set('height', HEIGHT);
   url.searchParams.set('duration', DURATION);
   url.searchParams.set('pause', PAUSE);
-  url.searchParams.set('repeat', 'false');
+  url.searchParams.set('repeat', 'true');
   url.searchParams.set('vCenter', 'true');
   url.searchParams.set('background', '00000000');
   url.searchParams.set('color', color);
