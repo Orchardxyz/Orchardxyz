@@ -153,12 +153,12 @@ function pickSkillIcons(sortedLanguages) {
 
 function buildStackMarkup(icons, labels) {
   const iconQuery = icons.join(',');
-  const alt = `Recent top languages: ${labels.join(', ')}`;
+  const alt = `Recent stack: ${labels.join(', ')}`;
 
   return [
     '<p>',
     '  <a href="https://skillicons.dev">',
-    `    <img src="https://skillicons.dev/icons?i=${iconQuery}" alt="${alt}" />`,
+    `    <img src="https://skillicons.dev/icons?i=${iconQuery}" alt="${alt}" width="280" />`,
     '  </a>',
     '</p>',
   ].join('\n');
