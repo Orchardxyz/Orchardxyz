@@ -11,12 +11,21 @@ const END_MARKER = '<!-- END:readme-typing -->';
 const TEXT = process.env.README_TYPING_TEXT || 'Make it happen.';
 const LIGHT_COLOR = process.env.README_TYPING_LIGHT_COLOR || '111827';
 const DARK_COLOR = process.env.README_TYPING_DARK_COLOR || 'E5E7EB';
-const FONT = process.env.README_TYPING_FONT || 'Inter';
+const FONT = process.env.README_TYPING_FONT || 'SF Mono';
 const FONT_SIZE = process.env.README_TYPING_FONT_SIZE || '20';
 const WIDTH = process.env.README_TYPING_WIDTH || '260';
 const HEIGHT = process.env.README_TYPING_HEIGHT || '28';
 const DURATION = process.env.README_TYPING_DURATION || '2500';
 const PAUSE = process.env.README_TYPING_PAUSE || '1000';
+
+function escapeXml(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
+}
 
 function buildTypingUrl(color) {
   const url = new URL('https://readme-typing-svg.demolab.com/');
@@ -35,13 +44,14 @@ function buildTypingUrl(color) {
 }
 
 function buildMarkup() {
-  const darkUrl = buildTypingUrl(DARK_COLOR);
-  const lightUrl = buildTypingUrl(LIGHT_COLOR);
+  const darkUrl = escapeXml(buildTypingUrl(DARK_COLOR));
+  const lightUrl = escapeXml(buildTypingUrl(LIGHT_COLOR));
+  const safeText = escapeXml(TEXT);
 
   return [
     '<picture>',
     `  <source media="(prefers-color-scheme: dark)" srcset="${darkUrl}" />`,
-    `  <img src="${lightUrl}" alt="${TEXT}" />`,
+    `  <img src="${lightUrl}" alt="${safeText}" />`,
     '</picture>',
   ].join('\n');
 }
@@ -63,7 +73,7 @@ async function main() {
   const readme = await fs.readFile(README_PATH, 'utf8');
   const updated = replaceMarkedSection(readme, buildMarkup());
   await fs.writeFile(README_PATH, updated, 'utf8');
-  console.log(`Updated README typing block for dark/light mode: ${TEXT}`);
+  console.log(`Updated README typing block with readme-typing-svg: ${TEXT}`);
 }
 
 main().catch(error => {

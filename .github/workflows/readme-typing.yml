@@ -2,8 +2,6 @@ name: Update README typing
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "15 3 * * *"
 
 jobs:
   update-readme:
@@ -26,7 +24,7 @@ jobs:
           README_TYPING_TEXT: Make it happen.
           README_TYPING_LIGHT_COLOR: 111827
           README_TYPING_DARK_COLOR: E5E7EB
-          README_TYPING_FONT: Inter
+          README_TYPING_FONT: SF Mono
           README_TYPING_FONT_SIZE: 20
           README_TYPING_WIDTH: 260
           README_TYPING_HEIGHT: 28
