@@ -1,24 +1,35 @@
-<table style="width: 100%; border-collapse: separate; border-spacing: 12px 12px;">
-  <tr>
-    <td width="50%" valign="top">
-      <picture>
-        <source srcset="./profile/activity-dark.svg" media="(prefers-color-scheme: dark)" />
-        <source srcset="./profile/activity.svg" media="(prefers-color-scheme: light)" />
-        <img src="./profile/activity.svg" alt="GitHub activity (last 12 weeks)" width="100%" style="height: 230px; object-fit: contain;" />
-      </picture>
-    </td>
-    <td width="50%" valign="top">
-      <picture>
-        <source srcset="./profile/langs-dark.svg" media="(prefers-color-scheme: dark)" />
-        <source srcset="./profile/langs.svg" media="(prefers-color-scheme: light)" />
-        <img src="./profile/langs.svg" alt="Top languages (past year)" width="100%" style="height: 230px; object-fit: contain;" />
-      </picture>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="padding-top: 4px;">
-      <h3>Hi there 👋</h3>
-      <p>Front-end developer shipping small open-source utilities whenever time allows. Client work keeps me a bit quiet here, but I'm hoping to lean into the Vibe Coding wave and show up more often.</p>
-    </td>
-  </tr>
-</table>
+# Orchard
+ 
+ Frontend developer
+ 
+ <!-- START:readme-typing -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com/?lines=Make+it+happen.&amp;font=SF+Mono&amp;size=20&amp;width=260&amp;height=28&amp;duration=2500&amp;pause=1000&amp;repeat=false&amp;vCenter=true&amp;background=00000000&amp;color=E5E7EB" />
+  <img src="https://readme-typing-svg.demolab.com/?lines=Make+it+happen.&amp;font=SF+Mono&amp;size=20&amp;width=260&amp;height=28&amp;duration=2500&amp;pause=1000&amp;repeat=false&amp;vCenter=true&amp;background=00000000&amp;color=111827" alt="Make it happen." />
+</picture>
+<!-- END:readme-typing -->
+ 
+ <p>
+   <a href="https://github.com/Orchardxyz" aria-label="GitHub">
+     <picture>
+       <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/github.svg#svgView(preserveAspectRatio(none))" />
+       <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/brands/github.svg" alt="GitHub" width="20" height="20" />
+     </picture>
+   </a>
+   <a href="mailto:orchardyz@outlook.com" aria-label="Email">
+     <picture>
+       <source media="(prefers-color-scheme: dark)" srcset="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/envelope.svg#svgView(preserveAspectRatio(none))" />
+       <img src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/svgs/solid/envelope.svg" alt="Email" width="20" height="20" />
+     </picture>
+   </a>
+ </p>
+ 
+ Top languages · past year
+ 
+ <!-- START:recent-stack -->
+<p>
+  <a href="https://skillicons.dev">
+    <img src="https://skillicons.dev/icons?i=ts,js,html,rust,swift,css" alt="Recent top languages: TypeScript, JavaScript, HTML, Rust, Swift, CSS" />
+  </a>
+</p>
+<!-- END:recent-stack -->

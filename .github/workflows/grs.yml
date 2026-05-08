@@ -1,4 +1,4 @@
-name: Update README cards
+name: Update README stack
 
 on:
   schedule:
@@ -19,16 +19,19 @@ jobs:
         with:
           node-version: 20
 
-      - name: Generate activity & language cards
-        run: node scripts/generate-stats.mjs
+      - name: Update recent stack
+        run: node scripts/update-skill-icons.mjs
         env:
           PERSONAL_GH_TOKEN: ${{ secrets.PERSONAL_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_USERNAME: ${{ github.repository_owner }}
+          LANG_ACTIVE_MONTHS: 12
+          MAX_SKILL_ICONS: 6
 
-      - name: Commit cards
+      - name: Commit README
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add profile/*.svg
-          git commit -m "Update README cards" || exit 0
+          git add README.md scripts/update-skill-icons.mjs
+          git commit -m "chore: update readme stack" || exit 0
           git push
