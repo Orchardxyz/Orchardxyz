@@ -28,7 +28,10 @@
  <!-- START:recent-stack -->
 <p>
   <a href="https://skillicons.dev">
-    <img src="https://skillicons.dev/icons?i=ts,js,html,rust,swift,css" alt="Recent stack: TypeScript, JavaScript, HTML, Rust, Swift, CSS" width="280" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts,js,html,rust,swift,css&amp;theme=dark" />
+      <img src="https://skillicons.dev/icons?i=ts,js,html,rust,swift,css&amp;theme=light" alt="Recent stack: TypeScript, JavaScript, HTML, Rust, Swift, CSS" width="280" />
+    </picture>
   </a>
 </p>
 <!-- END:recent-stack -->
