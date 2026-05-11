@@ -8,6 +8,8 @@ const TOKEN = PERSONAL_TOKEN || process.env.GITHUB_TOKEN || '';
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR;
 const LANG_ACTIVE_MONTHS = Number(process.env.LANG_ACTIVE_MONTHS || 12);
 const MAX_SKILL_ICONS = Number(process.env.MAX_SKILL_ICONS || 6);
+const SKILL_ICON_LIGHT_THEME = process.env.SKILL_ICON_LIGHT_THEME || 'light';
+const SKILL_ICON_DARK_THEME = process.env.SKILL_ICON_DARK_THEME || 'dark';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const README_PATH = path.resolve(__dirname, '..', 'README.md');
 const START_MARKER = '<!-- START:recent-stack -->';
@@ -45,6 +47,15 @@ const languageToSkillIcon = {
 if (!USERNAME) {
   console.error('Missing username: set GITHUB_USERNAME or rely on GitHub Actions context');
   process.exit(1);
+}
+
+function escapeXml(value) {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&apos;');
 }
 
 function createHeaders({ includeAuth = true, extra = {} } = {}) {
@@ -132,14 +143,16 @@ function toSortedLanguages(totals) {
 function pickSkillIcons(sortedLanguages) {
   const icons = [];
   const labels = [];
+  const iconSet = new Set();
 
   for (const [language] of sortedLanguages) {
     const icon = languageToSkillIcon[language];
 
-    if (!icon || icons.includes(icon)) {
+    if (!icon || iconSet.has(icon)) {
       continue;
     }
 
+    iconSet.add(icon);
     icons.push(icon);
     labels.push(language);
 
@@ -151,14 +164,27 @@ function pickSkillIcons(sortedLanguages) {
   return { icons, labels };
 }
 
+function buildSkillIconsUrl(icons, theme) {
+  const url = new URL('https://skillicons.dev/icons');
+  url.searchParams.set('i', icons.join(','));
+  if (theme) {
+    url.searchParams.set('theme', theme);
+  }
+  return url.toString();
+}
+
 function buildStackMarkup(icons, labels) {
-  const iconQuery = icons.join(',');
-  const alt = `Recent stack: ${labels.join(', ')}`;
+  const alt = escapeXml(`Recent stack: ${labels.join(', ')}`);
+  const lightUrl = escapeXml(buildSkillIconsUrl(icons, SKILL_ICON_LIGHT_THEME));
+  const darkUrl = escapeXml(buildSkillIconsUrl(icons, SKILL_ICON_DARK_THEME));
 
   return [
     '<p>',
     '  <a href="https://skillicons.dev">',
-    `    <img src="https://skillicons.dev/icons?i=${iconQuery}" alt="${alt}" width="280" />`,
+    '    <picture>',
+    `      <source media="(prefers-color-scheme: dark)" srcset="${darkUrl}" />`,
+    `      <img src="${lightUrl}" alt="${alt}" width="280" />`,
+    '    </picture>',
     '  </a>',
     '</p>',
   ].join('\n');

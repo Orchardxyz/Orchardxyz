@@ -27,6 +27,8 @@ jobs:
           GITHUB_USERNAME: ${{ github.repository_owner }}
           LANG_ACTIVE_MONTHS: 12
           MAX_SKILL_ICONS: 6
+          SKILL_ICON_LIGHT_THEME: light
+          SKILL_ICON_DARK_THEME: dark
 
       - name: Commit README
         run: |
