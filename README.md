@@ -29,8 +29,8 @@
 <p>
   <a href="https://skillicons.dev">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts%2Cjs%2Chtml%2Crust%2Cswift%2Cpython&amp;theme=dark" />
-      <img src="https://skillicons.dev/icons?i=ts%2Cjs%2Chtml%2Crust%2Cswift%2Cpython&amp;theme=light" alt="Recent stack: TypeScript, JavaScript, HTML, Rust, Swift, Python" width="280" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts%2Cjs%2Chtml%2Crust%2Cswift%2Cpython%2Ccss%2Cbash&amp;theme=dark" />
+      <img src="https://skillicons.dev/icons?i=ts%2Cjs%2Chtml%2Crust%2Cswift%2Cpython%2Ccss%2Cbash&amp;theme=light" alt="Recent stack: TypeScript, JavaScript, HTML, Rust, Swift, Python, CSS, Shell" width="280" />
     </picture>
   </a>
 </p>
