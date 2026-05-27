@@ -8,6 +8,7 @@ const TOKEN = PERSONAL_TOKEN || process.env.GITHUB_TOKEN || '';
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR;
 const LANG_ACTIVE_MONTHS = Number(process.env.LANG_ACTIVE_MONTHS || 12);
 const MAX_SKILL_ICONS = Number(process.env.MAX_SKILL_ICONS || 6);
+const SKILL_ICON_WIDTH = Number(process.env.SKILL_ICON_WIDTH || 35);
 const SKILL_ICON_LIGHT_THEME = process.env.SKILL_ICON_LIGHT_THEME || 'light';
 const SKILL_ICON_DARK_THEME = process.env.SKILL_ICON_DARK_THEME || 'dark';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -177,13 +178,14 @@ function buildStackMarkup(icons, labels) {
   const alt = escapeXml(`Recent stack: ${labels.join(', ')}`);
   const lightUrl = escapeXml(buildSkillIconsUrl(icons, SKILL_ICON_LIGHT_THEME));
   const darkUrl = escapeXml(buildSkillIconsUrl(icons, SKILL_ICON_DARK_THEME));
+  const totalWidth = icons.length * SKILL_ICON_WIDTH;
 
   return [
     '<p>',
     '  <a href="https://skillicons.dev">',
     '    <picture>',
     `      <source media="(prefers-color-scheme: dark)" srcset="${darkUrl}" />`,
-    `      <img src="${lightUrl}" alt="${alt}" width="280" />`,
+    `      <img src="${lightUrl}" alt="${alt}" width="${totalWidth}" />`,
     '    </picture>',
     '  </a>',
     '</p>',
