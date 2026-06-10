@@ -3,6 +3,9 @@ name: Update Recent Languages
 on:
   schedule:
     - cron: "0 3 * * *"
+  push:
+    branches:
+      - chore/recent-languages-metrics
   workflow_dispatch:
 
 jobs:
