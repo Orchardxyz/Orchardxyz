@@ -22,6 +22,7 @@ jobs:
           user: Orchardxyz
           base: ""
           config_timezone: Asia/Shanghai
+          commits_authoring: Orchardxyz, Orchard, orchardyz@outlook.com, 43738751+Orchardxyz@users.noreply.github.com
           plugin_languages: yes
           plugin_languages_sections: recently-used
           plugin_languages_details: bytes-size, percentage
