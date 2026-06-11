@@ -7,14 +7,18 @@ const PERSONAL_TOKEN = process.env.PERSONAL_GH_TOKEN || '';
 const TOKEN = PERSONAL_TOKEN || process.env.GITHUB_TOKEN || '';
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR;
 const RECENT_LANG_DAYS = Number(process.env.RECENT_LANG_DAYS || 60);
-const RECENT_LANG_LIMIT = Number(process.env.RECENT_LANG_LIMIT || 4);
+const RECENT_LANG_LIMIT = Number(process.env.RECENT_LANG_LIMIT || 6);
+const RECENT_LANG_MIN_PERCENT = Number(process.env.RECENT_LANG_MIN_PERCENT || 0.1);
 const RECENT_LANG_BAR_CELLS = Number(process.env.RECENT_LANG_BAR_CELLS || 24);
 const RECENT_LANG_REPO_LIMIT = Number(process.env.RECENT_LANG_REPO_LIMIT || 30);
 const RECENT_LANG_COMMIT_LIMIT = Number(process.env.RECENT_LANG_COMMIT_LIMIT || 120);
 const RECENT_LANG_AUTHORING = process.env.RECENT_LANG_AUTHORING || USERNAME || '';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const README_PATH = path.resolve(__dirname, '..', 'README.md');
 const OUTPUT_LIGHT_PATH = path.resolve(__dirname, '..', 'assets', 'recent-languages-light.svg');
 const OUTPUT_DARK_PATH = path.resolve(__dirname, '..', 'assets', 'recent-languages-dark.svg');
+const START_MARKER = '<!-- START:recent-languages -->';
+const END_MARKER = '<!-- END:recent-languages -->';
 const USER_AGENT = 'orchard-recent-languages';
 
 const extensionToLanguage = new Map([
@@ -48,9 +52,6 @@ const themes = {
     trackStroke: '#d1d5db',
     segment: '#4b5563',
     cutout: '#f9fafb',
-    legend: '#111827',
-    percent: '#64748b',
-    separator: '#9ca3af',
     empty: '#6b7280',
   },
   dark: {
@@ -58,9 +59,6 @@ const themes = {
     trackStroke: '#3f444c',
     segment: '#8b949e',
     cutout: '#161b22',
-    legend: '#e6edf3',
-    percent: '#9da7b3',
-    separator: '#6e7681',
     empty: '#9ca3af',
   },
 };
@@ -70,6 +68,8 @@ const segmentStyles = [
   { kind: 'diagonal', opacity: 0.9 },
   { kind: 'dots', opacity: 0.84 },
   { kind: 'grid', opacity: 0.78 },
+  { kind: 'vertical', opacity: 0.72 },
+  { kind: 'checker', opacity: 0.68 },
 ];
 
 if (!USERNAME) {
@@ -294,11 +294,18 @@ async function collectLanguageTotals() {
 }
 
 /**
- * Orders languages by activity weight and limits the visible entries.
+ * Orders languages by activity weight, drops tiny slices, and limits visible entries.
  */
 function sortLanguages(totals) {
-  return Array.from(totals.entries())
-    .sort((a, b) => b[1] - a[1])
+  const sorted = Array.from(totals.entries()).sort((a, b) => b[1] - a[1]);
+  const total = sorted.reduce((sum, [, value]) => sum + value, 0);
+
+  if (total <= 0) {
+    return [];
+  }
+
+  return sorted
+    .filter(([, value]) => ((value / total) * 100) >= RECENT_LANG_MIN_PERCENT)
     .slice(0, RECENT_LANG_LIMIT);
 }
 
@@ -347,6 +354,41 @@ function formatPercent(value, total) {
 }
 
 /**
+ * Formats the recent-language summary for inline HTML below the SVG bar.
+ */
+function buildSummaryText(items) {
+  const total = items.reduce((sum, [, value]) => sum + value, 0);
+  return items
+    .map(([language, value]) => `${language} ${formatPercent(value, total)}`)
+    .join(' • ');
+}
+
+/**
+ * Builds the HTML summary line rendered below the SVG bar in README.
+ */
+function buildSummaryMarkup(items) {
+  const total = items.reduce((sum, [, value]) => sum + value, 0);
+
+  if (items.length === 0) {
+    return `<p style="margin:2px 0 0;font-size:14px;line-height:1.2;color:inherit;"><sub>No recent language activity in the last ${RECENT_LANG_DAYS} days.</sub></p>`;
+  }
+
+  const parts = [];
+
+  items.forEach(([language, value], index) => {
+    if (index > 0) {
+      parts.push('<span style="color:#8b949e;"> • </span>');
+    }
+
+    parts.push(
+      `<span>${escapeXml(language)} <span style="opacity:0.72;">${escapeXml(formatPercent(value, total))}</span></span>`,
+    );
+  });
+
+  return `<p style="margin:2px 0 0;font-size:14px;line-height:1.2;color:inherit;"><sub>${parts.join('')}</sub></p>`;
+}
+
+/**
  * Defines the reusable SVG patterns used to distinguish each bar segment.
  */
 function buildPatternDefs(theme) {
@@ -363,6 +405,16 @@ function buildPatternDefs(theme) {
     `<pattern id="pattern-grid" width="8" height="8" patternUnits="userSpaceOnUse">`,
     `  <rect width="8" height="8" fill="${theme.segment}" fill-opacity="${segmentStyles[3].opacity}" />`,
     `  <path d="M0 4H8M4 0V8" stroke="${theme.cutout}" stroke-opacity="0.96" stroke-width="1.2" />`,
+    `</pattern>`,
+    `<pattern id="pattern-vertical" width="8" height="8" patternUnits="userSpaceOnUse">`,
+    `  <rect width="8" height="8" fill="${theme.segment}" fill-opacity="${segmentStyles[4].opacity}" />`,
+    `  <rect x="1" y="0" width="1.5" height="8" fill="${theme.cutout}" fill-opacity="0.92" />`,
+    `  <rect x="5.5" y="0" width="1.5" height="8" fill="${theme.cutout}" fill-opacity="0.92" />`,
+    `</pattern>`,
+    `<pattern id="pattern-checker" width="8" height="8" patternUnits="userSpaceOnUse">`,
+    `  <rect width="8" height="8" fill="${theme.segment}" fill-opacity="${segmentStyles[5].opacity}" />`,
+    `  <rect x="0" y="0" width="4" height="4" fill="${theme.cutout}" fill-opacity="0.9" />`,
+    `  <rect x="4" y="4" width="4" height="4" fill="${theme.cutout}" fill-opacity="0.9" />`,
     `</pattern>`,
   ].join('\n  ');
 }
@@ -401,31 +453,11 @@ function buildBar(items, cells, theme) {
 }
 
 /**
- * Renders the one-line language summary joined by middle-dot separators.
- */
-function buildLegendLine(items) {
-  const total = items.reduce((sum, [, value]) => sum + value, 0);
-  const parts = [];
-
-  items.forEach(([language, value], index) => {
-    if (index > 0) {
-      parts.push('<tspan class="separator"> • </tspan>');
-    }
-
-    parts.push(
-      `<tspan class="legend">${escapeXml(language)} </tspan><tspan class="percent">${escapeXml(formatPercent(value, total))}</tspan>`,
-    );
-  });
-
-  return `<text x="0" y="46" xml:space="preserve">${parts.join('')}</text>`;
-}
-
-/**
  * Creates the neutral fallback SVG shown when no recent activity is found.
  */
 function buildEmptySvg(theme) {
   return [
-    '<svg width="560" height="44" viewBox="0 0 560 44" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">',
+    '<svg width="560" height="32" viewBox="0 0 560 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">',
     '  <title id="title">Recent languages</title>',
     `  <desc id="desc">No recent language activity found in the last ${RECENT_LANG_DAYS} days.</desc>`,
     '  <style>',
@@ -445,11 +477,8 @@ function buildSvg(items, theme) {
   }
 
   const cells = allocateBarCells(items);
-  const total = items.reduce((sum, [, value]) => sum + value, 0);
-  const languagesDesc = items
-    .map(([language, value]) => `${language} ${formatPercent(value, total)}`)
-    .join(', ');
-  const height = 54;
+  const languagesDesc = buildSummaryText(items).replaceAll(' • ', ', ');
+  const height = 32;
 
   return [
     `<svg width="560" height="${height}" viewBox="0 0 560 ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
@@ -458,15 +487,39 @@ function buildSvg(items, theme) {
     '  <defs>',
     `  ${buildPatternDefs(theme)}`,
     '  </defs>',
-    '  <style>',
-    `    text { font: 500 13px "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace; letter-spacing: 0; }`,
-    `    .legend { fill: ${theme.legend}; }`,
-    `    .percent { fill: ${theme.percent}; }`,
-    `    .separator { fill: ${theme.separator}; }`,
-    '  </style>',
     `  ${buildBar(items, cells, theme)}`,
-    `  ${buildLegendLine(items)}`,
     '</svg>',
+  ].join('\n');
+}
+
+/**
+ * Replaces the recent-languages block in README with generated markup.
+ */
+function replaceMarkedSection(content, replacement) {
+  const start = content.indexOf(START_MARKER);
+  const end = content.indexOf(END_MARKER);
+
+  if (start === -1 || end === -1 || end <= start) {
+    throw new Error('Could not find recent-languages markers in README.md');
+  }
+
+  const before = content.slice(0, start + START_MARKER.length);
+  const after = content.slice(end);
+  return `${before}\n${replacement}\n${after}`;
+}
+
+/**
+ * Builds the HTML block inserted under the Recent languages heading in README.
+ */
+function buildRecentLanguagesMarkup(items) {
+  return [
+    '<p style="margin:0;">',
+    '  <picture>',
+    '    <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />',
+    '    <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" />',
+    '  </picture>',
+    '</p>',
+    buildSummaryMarkup(items),
   ].join('\n');
 }
 
@@ -478,9 +531,12 @@ async function main() {
   const sorted = sortLanguages(totals);
   const lightSvg = buildSvg(sorted, themes.light);
   const darkSvg = buildSvg(sorted, themes.dark);
+  const readme = await fs.readFile(README_PATH, 'utf8');
+  const updatedReadme = replaceMarkedSection(readme, buildRecentLanguagesMarkup(sorted));
 
   await fs.writeFile(OUTPUT_LIGHT_PATH, lightSvg, 'utf8');
   await fs.writeFile(OUTPUT_DARK_PATH, darkSvg, 'utf8');
+  await fs.writeFile(README_PATH, updatedReadme, 'utf8');
 
   const label = sorted.length > 0 ? sorted.map(([language]) => language).join(', ') : 'none';
   console.log(`Updated recent languages SVGs for ${USERNAME}: ${label} (${matchingCommitCount} commits scanned)`);

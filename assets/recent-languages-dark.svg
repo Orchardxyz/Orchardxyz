@@ -1,4 +1,4 @@
-<svg width="560" height="54" viewBox="0 0 560 54" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="560" height="32" viewBox="0 0 560 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Recent languages</title>
   <desc id="desc">Recently used languages over the last 60 days: JavaScript 56.5%, TypeScript 41.2%, Vue 1.5%, CSS 0.8%.</desc>
   <defs>
@@ -15,18 +15,21 @@
     <rect width="8" height="8" fill="#8b949e" fill-opacity="0.78" />
     <path d="M0 4H8M4 0V8" stroke="#161b22" stroke-opacity="0.96" stroke-width="1.2" />
   </pattern>
+  <pattern id="pattern-vertical" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#8b949e" fill-opacity="0.72" />
+    <rect x="1" y="0" width="1.5" height="8" fill="#161b22" fill-opacity="0.92" />
+    <rect x="5.5" y="0" width="1.5" height="8" fill="#161b22" fill-opacity="0.92" />
+  </pattern>
+  <pattern id="pattern-checker" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#8b949e" fill-opacity="0.68" />
+    <rect x="0" y="0" width="4" height="4" fill="#161b22" fill-opacity="0.9" />
+    <rect x="4" y="4" width="4" height="4" fill="#161b22" fill-opacity="0.9" />
+  </pattern>
   </defs>
-  <style>
-    text { font: 500 13px "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace; letter-spacing: 0; }
-    .legend { fill: #e6edf3; }
-    .percent { fill: #9da7b3; }
-    .separator { fill: #6e7681; }
-  </style>
   <rect x="0" y="8" width="504" height="16" rx="3" fill="#30363d" />
   <rect x="0" y="8" width="504" height="16" rx="3" fill="none" stroke="#3f444c" stroke-width="1" />
   <rect x="0" y="8" width="273" height="16" fill="#8b949e" fill-opacity="0.96" />
   <rect x="273" y="8" width="189" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
   <rect x="462" y="8" width="21" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
   <rect x="483" y="8" width="21" height="16" fill="url(#pattern-grid)" fill-opacity="1" />
-  <text x="0" y="46" xml:space="preserve"><tspan class="legend">JavaScript </tspan><tspan class="percent">56.5%</tspan><tspan class="separator"> • </tspan><tspan class="legend">TypeScript </tspan><tspan class="percent">41.2%</tspan><tspan class="separator"> • </tspan><tspan class="legend">Vue </tspan><tspan class="percent">1.5%</tspan><tspan class="separator"> • </tspan><tspan class="legend">CSS </tspan><tspan class="percent">0.8%</tspan></text>
 </svg>

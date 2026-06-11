@@ -29,7 +29,7 @@
   <a href="https://skillicons.dev">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=dark" />
-      <img src="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=light" alt="Skills: React, TypeScript, JavaScript, Vue, HTML, CSS" width="210" />
+      <img src="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=light" alt="Skills: React, TypeScript, JavaScript, Vue, HTML, CSS" width="240" />
     </picture>
   </a>
 </p>
@@ -37,10 +37,11 @@
 <sub>▸ Recent languages</sub>
 
 <!-- START:recent-languages -->
-<p>
+<p style="margin:0;">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
-    <img src="./assets/recent-languages-light.svg" alt="Recently used languages chart" width="560" />
+    <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" />
   </picture>
 </p>
+<p style="margin:2px 0 0;font-size:14px;line-height:1.2;color:inherit;"><sub><span>JavaScript <span style="opacity:0.72;">56.5%</span></span><span style="color:#8b949e;"> • </span><span>TypeScript <span style="opacity:0.72;">41.2%</span></span><span style="color:#8b949e;"> • </span><span>Vue <span style="opacity:0.72;">1.5%</span></span><span style="color:#8b949e;"> • </span><span>CSS <span style="opacity:0.72;">0.8%</span></span></sub></p>
 <!-- END:recent-languages -->
