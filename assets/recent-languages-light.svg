@@ -1,4 +1,4 @@
-<svg width="560" height="46" viewBox="0 0 560 46" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+<svg width="560" height="50" viewBox="0 0 560 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Recent languages</title>
   <desc id="desc">Recently used languages over the last 60 days: JavaScript 56.5%, TypeScript 41.2%, Vue 1.5%, CSS 0.8%.</desc>
   <defs>
@@ -38,5 +38,5 @@
   <rect x="273" y="6" width="189" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
   <rect x="462" y="6" width="21" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
   <rect x="483" y="6" width="21" height="16" fill="url(#pattern-grid)" fill-opacity="1" />
-  <text x="0" y="29" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">JavaScript </tspan><tspan class="percent">56.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">TypeScript </tspan><tspan class="percent">41.2%</tspan><tspan class="separator"> • </tspan><tspan class="label">Vue </tspan><tspan class="percent">1.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">0.8%</tspan></text>
+  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">JavaScript </tspan><tspan class="percent">56.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">TypeScript </tspan><tspan class="percent">41.2%</tspan><tspan class="separator"> • </tspan><tspan class="label">Vue </tspan><tspan class="percent">1.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">0.8%</tspan></text>
 </svg>
