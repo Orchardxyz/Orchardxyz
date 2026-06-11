@@ -1,0 +1,45 @@
+name: Update Recent Languages
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  push:
+    branches:
+      - chore/recent-languages-metrics
+  workflow_dispatch:
+
+jobs:
+  recent-languages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate recent languages SVG
+        run: node scripts/update-recent-languages.mjs
+        env:
+          PERSONAL_GH_TOKEN: ${{ secrets.PERSONAL_GH_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_USERNAME: ${{ github.repository_owner }}
+          RECENT_LANG_DAYS: 60
+          RECENT_LANG_LIMIT: 6
+          RECENT_LANG_MIN_PERCENT: 0.1
+          RECENT_LANG_BAR_CELLS: 24
+          RECENT_LANG_REPO_LIMIT: 30
+          RECENT_LANG_COMMIT_LIMIT: 120
+          RECENT_LANG_AUTHORING: Orchardxyz, Orchard, orchardyz@outlook.com, 43738751+Orchardxyz@users.noreply.github.com
+
+      - name: Commit generated SVG
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add README.md assets/recent-languages-light.svg assets/recent-languages-dark.svg scripts/update-recent-languages.mjs .github/workflows/recent-languages.yml
+          git commit -m "chore: update recent languages svg" || exit 0
+          git push

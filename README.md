@@ -23,15 +23,22 @@
    </span>
 </p>
 
-<sub>▸ Recent stack</sub>
+<sub>▸ Skills</sub>
 
- <!-- START:recent-stack -->
 <p>
   <a href="https://skillicons.dev">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=ts%2Cjs%2Chtml%2Crust%2Ccss%2Cvue%2Cswift%2Cpython&amp;theme=dark" />
-      <img src="https://skillicons.dev/icons?i=ts%2Cjs%2Chtml%2Crust%2Ccss%2Cvue%2Cswift%2Cpython&amp;theme=light" alt="Recent stack: TypeScript, JavaScript, HTML, Rust, CSS, Vue, Swift, Python" width="280" />
+      <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=dark" />
+      <img src="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=light" alt="Skills: React, TypeScript, JavaScript, Vue, HTML, CSS" width="240" />
     </picture>
   </a>
 </p>
-<!-- END:recent-stack -->
+
+<sub>▸ Recent languages</sub>
+
+<!-- START:recent-languages -->
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
+  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="560" align="top" />
+</picture>
+<!-- END:recent-languages -->

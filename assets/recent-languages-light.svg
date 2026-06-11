@@ -1,0 +1,42 @@
+<svg width="560" height="50" viewBox="0 0 560 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Recent languages</title>
+  <desc id="desc">Recently used languages over the last 60 days: JavaScript 56.5%, TypeScript 41.2%, Vue 1.5%, CSS 0.8%.</desc>
+  <defs>
+  <pattern id="pattern-diagonal" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.9" />
+    <rect x="0" y="0" width="2" height="8" fill="#f9fafb" fill-opacity="0.92" />
+  </pattern>
+  <pattern id="pattern-dots" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.84" />
+    <circle cx="2" cy="2" r="1.15" fill="#f9fafb" fill-opacity="0.96" />
+    <circle cx="6" cy="6" r="1.15" fill="#f9fafb" fill-opacity="0.96" />
+  </pattern>
+  <pattern id="pattern-grid" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.78" />
+    <path d="M0 4H8M4 0V8" stroke="#f9fafb" stroke-opacity="0.96" stroke-width="1.2" />
+  </pattern>
+  <pattern id="pattern-vertical" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.72" />
+    <rect x="1" y="0" width="1.5" height="8" fill="#f9fafb" fill-opacity="0.92" />
+    <rect x="5.5" y="0" width="1.5" height="8" fill="#f9fafb" fill-opacity="0.92" />
+  </pattern>
+  <pattern id="pattern-checker" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.68" />
+    <rect x="0" y="0" width="4" height="4" fill="#f9fafb" fill-opacity="0.9" />
+    <rect x="4" y="4" width="4" height="4" fill="#f9fafb" fill-opacity="0.9" />
+  </pattern>
+  </defs>
+  <style>
+    .label-line { font: 500 12px "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace; letter-spacing: 0; }
+    .label { fill: #24292f; }
+    .percent { fill: #6e7781; }
+    .separator { fill: #8b949e; }
+  </style>
+  <rect x="0" y="6" width="504" height="16" rx="3" fill="#e5e7eb" />
+  <rect x="0" y="6" width="504" height="16" rx="3" fill="none" stroke="#d1d5db" stroke-width="1" />
+  <rect x="0" y="6" width="273" height="16" fill="#4b5563" fill-opacity="0.96" />
+  <rect x="273" y="6" width="189" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
+  <rect x="462" y="6" width="21" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
+  <rect x="483" y="6" width="21" height="16" fill="url(#pattern-grid)" fill-opacity="1" />
+  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">JavaScript </tspan><tspan class="percent">56.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">TypeScript </tspan><tspan class="percent">41.2%</tspan><tspan class="separator"> • </tspan><tspan class="label">Vue </tspan><tspan class="percent">1.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">0.8%</tspan></text>
+</svg>
