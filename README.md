@@ -37,11 +37,9 @@
 <sub>▸ Recent languages</sub>
 
 <!-- START:recent-languages -->
-<p style="margin:0;">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
-    <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" />
-  </picture>
-</p>
-<p style="margin:2px 0 0;font-size:14px;line-height:1.2;color:inherit;"><sub><span>JavaScript <span style="opacity:0.72;">56.5%</span></span><span style="color:#8b949e;"> • </span><span>TypeScript <span style="opacity:0.72;">41.2%</span></span><span style="color:#8b949e;"> • </span><span>Vue <span style="opacity:0.72;">1.5%</span></span><span style="color:#8b949e;"> • </span><span>CSS <span style="opacity:0.72;">0.8%</span></span></sub></p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
+  <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" align="top" />
+</picture><br />
+<span style="font-size:14px;line-height:1.15;color:inherit;"><span>JavaScript <span style="opacity:0.72;">56.5%</span></span><span style="color:#8b949e;"> • </span><span>TypeScript <span style="opacity:0.72;">41.2%</span></span><span style="color:#8b949e;"> • </span><span>Vue <span style="opacity:0.72;">1.5%</span></span><span style="color:#8b949e;"> • </span><span>CSS <span style="opacity:0.72;">0.8%</span></span></span>
 <!-- END:recent-languages -->

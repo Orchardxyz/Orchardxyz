@@ -370,7 +370,7 @@ function buildSummaryMarkup(items) {
   const total = items.reduce((sum, [, value]) => sum + value, 0);
 
   if (items.length === 0) {
-    return `<p style="margin:2px 0 0;font-size:14px;line-height:1.2;color:inherit;"><sub>No recent language activity in the last ${RECENT_LANG_DAYS} days.</sub></p>`;
+    return `<span style="font-size:14px;line-height:1.15;color:inherit;">No recent language activity in the last ${RECENT_LANG_DAYS} days.</span>`;
   }
 
   const parts = [];
@@ -385,7 +385,7 @@ function buildSummaryMarkup(items) {
     );
   });
 
-  return `<p style="margin:2px 0 0;font-size:14px;line-height:1.2;color:inherit;"><sub>${parts.join('')}</sub></p>`;
+  return `<span style="font-size:14px;line-height:1.15;color:inherit;">${parts.join('')}</span>`;
 }
 
 /**
@@ -424,7 +424,7 @@ function buildPatternDefs(theme) {
  */
 function buildBar(items, cells, theme) {
   const barX = 0;
-  const barY = 8;
+  const barY = 6;
   const barHeight = 16;
   const cellWidth = 21;
   const barWidth = RECENT_LANG_BAR_CELLS * cellWidth;
@@ -457,13 +457,13 @@ function buildBar(items, cells, theme) {
  */
 function buildEmptySvg(theme) {
   return [
-    '<svg width="560" height="32" viewBox="0 0 560 32" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">',
+    '<svg width="560" height="28" viewBox="0 0 560 28" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">',
     '  <title id="title">Recent languages</title>',
     `  <desc id="desc">No recent language activity found in the last ${RECENT_LANG_DAYS} days.</desc>`,
     '  <style>',
     `    .empty { fill: ${theme.empty}; font: 500 13px "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }`,
     '  </style>',
-    `  <text class="empty" x="0" y="20">No recent language activity in the last ${RECENT_LANG_DAYS} days.</text>`,
+    `  <text class="empty" x="0" y="18">No recent language activity in the last ${RECENT_LANG_DAYS} days.</text>`,
     '</svg>',
   ].join('\n');
 }
@@ -478,7 +478,7 @@ function buildSvg(items, theme) {
 
   const cells = allocateBarCells(items);
   const languagesDesc = buildSummaryText(items).replaceAll(' • ', ', ');
-  const height = 32;
+  const height = 28;
 
   return [
     `<svg width="560" height="${height}" viewBox="0 0 560 ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
@@ -513,12 +513,10 @@ function replaceMarkedSection(content, replacement) {
  */
 function buildRecentLanguagesMarkup(items) {
   return [
-    '<p style="margin:0;">',
-    '  <picture>',
-    '    <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />',
-    '    <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" />',
-    '  </picture>',
-    '</p>',
+    '<picture>',
+    '  <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />',
+    '  <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" align="top" />',
+    '</picture><br />',
     buildSummaryMarkup(items),
   ].join('\n');
 }
