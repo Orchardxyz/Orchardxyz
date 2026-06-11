@@ -1,0 +1,32 @@
+<svg width="560" height="54" viewBox="0 0 560 54" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Recent languages</title>
+  <desc id="desc">Recently used languages over the last 60 days: JavaScript 56.5%, TypeScript 41.2%, Vue 1.5%, CSS 0.8%.</desc>
+  <defs>
+  <pattern id="pattern-diagonal" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.9" />
+    <rect x="0" y="0" width="2" height="8" fill="#f9fafb" fill-opacity="0.92" />
+  </pattern>
+  <pattern id="pattern-dots" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.84" />
+    <circle cx="2" cy="2" r="1.15" fill="#f9fafb" fill-opacity="0.96" />
+    <circle cx="6" cy="6" r="1.15" fill="#f9fafb" fill-opacity="0.96" />
+  </pattern>
+  <pattern id="pattern-grid" width="8" height="8" patternUnits="userSpaceOnUse">
+    <rect width="8" height="8" fill="#4b5563" fill-opacity="0.78" />
+    <path d="M0 4H8M4 0V8" stroke="#f9fafb" stroke-opacity="0.96" stroke-width="1.2" />
+  </pattern>
+  </defs>
+  <style>
+    text { font: 500 13px "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace; letter-spacing: 0; }
+    .legend { fill: #111827; }
+    .percent { fill: #64748b; }
+    .separator { fill: #9ca3af; }
+  </style>
+  <rect x="0" y="8" width="504" height="16" rx="3" fill="#e5e7eb" />
+  <rect x="0" y="8" width="504" height="16" rx="3" fill="none" stroke="#d1d5db" stroke-width="1" />
+  <rect x="0" y="8" width="273" height="16" fill="#4b5563" fill-opacity="0.96" />
+  <rect x="273" y="8" width="189" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
+  <rect x="462" y="8" width="21" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
+  <rect x="483" y="8" width="21" height="16" fill="url(#pattern-grid)" fill-opacity="1" />
+  <text x="0" y="46" xml:space="preserve"><tspan class="legend">JavaScript </tspan><tspan class="percent">56.5%</tspan><tspan class="separator"> • </tspan><tspan class="legend">TypeScript </tspan><tspan class="percent">41.2%</tspan><tspan class="separator"> • </tspan><tspan class="legend">Vue </tspan><tspan class="percent">1.5%</tspan><tspan class="separator"> • </tspan><tspan class="legend">CSS </tspan><tspan class="percent">0.8%</tspan></text>
+</svg>

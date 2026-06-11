@@ -36,8 +36,11 @@
 
 <sub>▸ Recent languages</sub>
 
- <!-- START:recent-languages -->
+<!-- START:recent-languages -->
 <p>
-  <img src="./assets/recent-languages.svg" alt="Recently used languages chart" width="560" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
+    <img src="./assets/recent-languages-light.svg" alt="Recently used languages chart" width="560" />
+  </picture>
 </p>
 <!-- END:recent-languages -->
