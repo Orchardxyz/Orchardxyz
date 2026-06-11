@@ -20,6 +20,16 @@ const OUTPUT_DARK_PATH = path.resolve(__dirname, '..', 'assets', 'recent-languag
 const START_MARKER = '<!-- START:recent-languages -->';
 const END_MARKER = '<!-- END:recent-languages -->';
 const USER_AGENT = 'orchard-recent-languages';
+const BAR_X = 0;
+const BAR_Y = 6;
+const BAR_HEIGHT = 16;
+const BAR_RADIUS = 3;
+const CELL_WIDTH = 21;
+const LABEL_FONT_SIZE = 12;
+const LABEL_LINE_HEIGHT = 15;
+const LABEL_TOP_GAP = 7;
+const LABEL_BOTTOM_PADDING = 2;
+const MONO_GLYPH_WIDTH = LABEL_FONT_SIZE * 0.62;
 
 const extensionToLanguage = new Map([
   ['.ts', 'TypeScript'],
@@ -52,6 +62,9 @@ const themes = {
     trackStroke: '#d1d5db',
     segment: '#4b5563',
     cutout: '#f9fafb',
+    legend: '#24292f',
+    percent: '#6e7781',
+    separator: '#8b949e',
     empty: '#6b7280',
   },
   dark: {
@@ -59,6 +72,9 @@ const themes = {
     trackStroke: '#3f444c',
     segment: '#8b949e',
     cutout: '#161b22',
+    legend: '#e6edf3',
+    percent: '#9da7b3',
+    separator: '#6e7681',
     empty: '#9ca3af',
   },
 };
@@ -354,7 +370,7 @@ function formatPercent(value, total) {
 }
 
 /**
- * Formats the recent-language summary for inline HTML below the SVG bar.
+ * Formats the recent-language summary for accessibility text and logs.
  */
 function buildSummaryText(items) {
   const total = items.reduce((sum, [, value]) => sum + value, 0);
@@ -364,28 +380,58 @@ function buildSummaryText(items) {
 }
 
 /**
- * Builds the HTML summary line rendered below the SVG bar in README.
+ * Estimates monospace text width closely enough for SVG line wrapping.
  */
-function buildSummaryMarkup(items) {
+function measureMonospaceText(text) {
+  return text.length * MONO_GLYPH_WIDTH;
+}
+
+/**
+ * Converts recent-language items into preformatted label tokens.
+ */
+function buildLabelTokens(items) {
   const total = items.reduce((sum, [, value]) => sum + value, 0);
+  return items.map(([language, value]) => {
+    const percent = formatPercent(value, total);
+    return {
+      language,
+      percent,
+      text: `${language} ${percent}`,
+    };
+  });
+}
 
-  if (items.length === 0) {
-    return `<span style="font-size:14px;line-height:1.15;color:inherit;">No recent language activity in the last ${RECENT_LANG_DAYS} days.</span>`;
-  }
+/**
+ * Wraps language tokens into one or more SVG text lines within the bar width.
+ */
+function wrapLabelLines(tokens, maxWidth) {
+  const separatorWidth = measureMonospaceText(' • ');
+  const lines = [];
+  let currentLine = [];
+  let currentWidth = 0;
 
-  const parts = [];
+  for (const token of tokens) {
+    const tokenWidth = measureMonospaceText(token.text);
+    const nextWidth = currentLine.length === 0
+      ? tokenWidth
+      : currentWidth + separatorWidth + tokenWidth;
 
-  items.forEach(([language, value], index) => {
-    if (index > 0) {
-      parts.push('<span style="color:#8b949e;"> • </span>');
+    if (currentLine.length > 0 && nextWidth > maxWidth) {
+      lines.push(currentLine);
+      currentLine = [token];
+      currentWidth = tokenWidth;
+      continue;
     }
 
-    parts.push(
-      `<span>${escapeXml(language)} <span style="opacity:0.72;">${escapeXml(formatPercent(value, total))}</span></span>`,
-    );
-  });
+    currentLine.push(token);
+    currentWidth = nextWidth;
+  }
 
-  return `<span style="font-size:14px;line-height:1.15;color:inherit;">${parts.join('')}</span>`;
+  if (currentLine.length > 0) {
+    lines.push(currentLine);
+  }
+
+  return lines;
 }
 
 /**
@@ -423,19 +469,15 @@ function buildPatternDefs(theme) {
  * Renders the textured horizontal activity bar from the allocated cells.
  */
 function buildBar(items, cells, theme) {
-  const barX = 0;
-  const barY = 6;
-  const barHeight = 16;
-  const cellWidth = 21;
-  const barWidth = RECENT_LANG_BAR_CELLS * cellWidth;
+  const barWidth = RECENT_LANG_BAR_CELLS * CELL_WIDTH;
   const segments = [
-    `<rect x="${barX}" y="${barY}" width="${barWidth}" height="${barHeight}" rx="3" fill="${theme.track}" />`,
-    `<rect x="${barX}" y="${barY}" width="${barWidth}" height="${barHeight}" rx="3" fill="none" stroke="${theme.trackStroke}" stroke-width="1" />`,
+    `<rect x="${BAR_X}" y="${BAR_Y}" width="${barWidth}" height="${BAR_HEIGHT}" rx="${BAR_RADIUS}" fill="${theme.track}" />`,
+    `<rect x="${BAR_X}" y="${BAR_Y}" width="${barWidth}" height="${BAR_HEIGHT}" rx="${BAR_RADIUS}" fill="none" stroke="${theme.trackStroke}" stroke-width="1" />`,
   ];
-  let x = barX;
+  let x = BAR_X;
 
   for (let index = 0; index < items.length; index += 1) {
-    const width = cells[index] * cellWidth;
+    const width = cells[index] * CELL_WIDTH;
     const style = segmentStyles[index] || segmentStyles[segmentStyles.length - 1];
     const fill =
       style.kind === 'solid'
@@ -444,12 +486,51 @@ function buildBar(items, cells, theme) {
     const fillOpacity = style.kind === 'solid' ? style.opacity : 1;
 
     segments.push(
-      `<rect x="${x}" y="${barY}" width="${width}" height="${barHeight}" fill="${fill}" fill-opacity="${fillOpacity}" />`,
+      `<rect x="${x}" y="${BAR_Y}" width="${width}" height="${BAR_HEIGHT}" fill="${fill}" fill-opacity="${fillOpacity}" />`,
     );
     x += width;
   }
 
   return segments.join('\n  ');
+}
+
+/**
+ * Builds SVG text lines for the recent-language label beneath the bar.
+ */
+function buildLabelLines(items, theme) {
+  const tokens = buildLabelTokens(items);
+  const lines = wrapLabelLines(tokens, RECENT_LANG_BAR_CELLS * CELL_WIDTH);
+  const labelTop = BAR_Y + BAR_HEIGHT + LABEL_TOP_GAP;
+  const textLines = lines.map((line, index) => {
+    const y = labelTop + (index * LABEL_LINE_HEIGHT);
+    const parts = [];
+
+    line.forEach((token, tokenIndex) => {
+      if (tokenIndex > 0) {
+        parts.push('<tspan class="separator"> • </tspan>');
+      }
+
+      parts.push(`<tspan class="label">${escapeXml(token.language)} </tspan>`);
+      parts.push(`<tspan class="percent">${escapeXml(token.percent)}</tspan>`);
+    });
+
+    return `  <text x="${BAR_X}" y="${y}" class="label-line" dominant-baseline="hanging" xml:space="preserve">${parts.join('')}</text>`;
+  });
+
+  const height = labelTop + (lines.length * LABEL_LINE_HEIGHT) + LABEL_BOTTOM_PADDING;
+
+  return {
+    height,
+    style: [
+      '  <style>',
+      `    .label-line { font: 500 ${LABEL_FONT_SIZE}px "SFMono-Regular", "SF Mono", ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", monospace; letter-spacing: 0; }`,
+      `    .label { fill: ${theme.legend}; }`,
+      `    .percent { fill: ${theme.percent}; }`,
+      `    .separator { fill: ${theme.separator}; }`,
+      '  </style>',
+    ].join('\n'),
+    markup: textLines.join('\n'),
+  };
 }
 
 /**
@@ -478,16 +559,18 @@ function buildSvg(items, theme) {
 
   const cells = allocateBarCells(items);
   const languagesDesc = buildSummaryText(items).replaceAll(' • ', ', ');
-  const height = 28;
+  const label = buildLabelLines(items, theme);
 
   return [
-    `<svg width="560" height="${height}" viewBox="0 0 560 ${height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
+    `<svg width="560" height="${label.height}" viewBox="0 0 560 ${label.height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
     '  <title id="title">Recent languages</title>',
     `  <desc id="desc">Recently used languages over the last ${RECENT_LANG_DAYS} days: ${escapeXml(languagesDesc)}.</desc>`,
     '  <defs>',
     `  ${buildPatternDefs(theme)}`,
     '  </defs>',
+    label.style,
     `  ${buildBar(items, cells, theme)}`,
+    label.markup,
     '</svg>',
   ].join('\n');
 }
@@ -515,9 +598,8 @@ function buildRecentLanguagesMarkup(items) {
   return [
     '<picture>',
     '  <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />',
-    '  <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" align="top" />',
-    '</picture><br />',
-    buildSummaryMarkup(items),
+    '  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="560" align="top" />',
+    '</picture>',
   ].join('\n');
 }
 

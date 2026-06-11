@@ -39,7 +39,6 @@
 <!-- START:recent-languages -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
-  <img src="./assets/recent-languages-light.svg" alt="Recently used languages bar" width="560" align="top" />
-</picture><br />
-<span style="font-size:14px;line-height:1.15;color:inherit;"><span>JavaScript <span style="opacity:0.72;">56.5%</span></span><span style="color:#8b949e;"> • </span><span>TypeScript <span style="opacity:0.72;">41.2%</span></span><span style="color:#8b949e;"> • </span><span>Vue <span style="opacity:0.72;">1.5%</span></span><span style="color:#8b949e;"> • </span><span>CSS <span style="opacity:0.72;">0.8%</span></span></span>
+  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="560" align="top" />
+</picture>
 <!-- END:recent-languages -->
