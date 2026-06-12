@@ -1,6 +1,6 @@
 <svg width="560" height="50" viewBox="0 0 560 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Recent languages</title>
-  <desc id="desc">Recently used languages over the last 60 days: JavaScript 56.5%, TypeScript 41.2%, Vue 1.5%, CSS 0.8%.</desc>
+  <desc id="desc">Recently used languages over the last 60 days: JavaScript 58.7%, TypeScript 40.6%, CSS 0.7%.</desc>
   <defs>
   <pattern id="pattern-diagonal" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
     <rect width="8" height="8" fill="#8b949e" fill-opacity="0.9" />
@@ -35,8 +35,7 @@
   <rect x="0" y="6" width="504" height="16" rx="3" fill="#30363d" />
   <rect x="0" y="6" width="504" height="16" rx="3" fill="none" stroke="#3f444c" stroke-width="1" />
   <rect x="0" y="6" width="273" height="16" fill="#8b949e" fill-opacity="0.96" />
-  <rect x="273" y="6" width="189" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
-  <rect x="462" y="6" width="21" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
-  <rect x="483" y="6" width="21" height="16" fill="url(#pattern-grid)" fill-opacity="1" />
-  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">JavaScript </tspan><tspan class="percent">56.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">TypeScript </tspan><tspan class="percent">41.2%</tspan><tspan class="separator"> • </tspan><tspan class="label">Vue </tspan><tspan class="percent">1.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">0.8%</tspan></text>
+  <rect x="273" y="6" width="210" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
+  <rect x="483" y="6" width="21" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
+  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">JavaScript </tspan><tspan class="percent">58.7%</tspan><tspan class="separator"> • </tspan><tspan class="label">TypeScript </tspan><tspan class="percent">40.6%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">0.7%</tspan></text>
 </svg>
