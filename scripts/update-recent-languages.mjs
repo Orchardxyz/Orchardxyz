@@ -203,7 +203,17 @@ async function listRepos() {
 function filterRecentRepos(repos) {
   const cutoff = new Date(getCutoffIsoDate());
   return repos
-    .filter(repo => repo.pushed_at && new Date(repo.pushed_at) >= cutoff)
+    .filter((repo) => {
+      if (!repo.pushed_at || new Date(repo.pushed_at) < cutoff) {
+        return false;
+      }
+
+      if (repo.size === 0) {
+        return false;
+      }
+
+      return typeof repo.default_branch === 'string' && repo.default_branch.trim().length > 0;
+    })
     .slice(0, RECENT_LANG_REPO_LIMIT);
 }
 
