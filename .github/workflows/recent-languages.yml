@@ -32,8 +32,6 @@ jobs:
           RECENT_LANG_LIMIT: 6
           RECENT_LANG_MIN_PERCENT: 0.1
           RECENT_LANG_BAR_CELLS: 24
-          RECENT_LANG_REPO_LIMIT: 30
-          RECENT_LANG_COMMIT_LIMIT: 120
           RECENT_LANG_AUTHORING: Orchardxyz, Orchard, orchardyz@outlook.com, 43738751+Orchardxyz@users.noreply.github.com
 
       - name: Commit generated SVG

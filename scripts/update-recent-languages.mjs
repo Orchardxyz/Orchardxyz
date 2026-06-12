@@ -10,8 +10,6 @@ const RECENT_LANG_DAYS = Number(process.env.RECENT_LANG_DAYS || 60);
 const RECENT_LANG_LIMIT = Number(process.env.RECENT_LANG_LIMIT || 6);
 const RECENT_LANG_MIN_PERCENT = Number(process.env.RECENT_LANG_MIN_PERCENT || 0.1);
 const RECENT_LANG_BAR_CELLS = Number(process.env.RECENT_LANG_BAR_CELLS || 24);
-const RECENT_LANG_REPO_LIMIT = Number(process.env.RECENT_LANG_REPO_LIMIT || 30);
-const RECENT_LANG_COMMIT_LIMIT = Number(process.env.RECENT_LANG_COMMIT_LIMIT || 120);
 const RECENT_LANG_AUTHORING = process.env.RECENT_LANG_AUTHORING || USERNAME || '';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const README_PATH = path.resolve(__dirname, '..', 'README.md');
@@ -30,6 +28,7 @@ const LABEL_LINE_HEIGHT = 15;
 const LABEL_TOP_GAP = 11;
 const LABEL_BOTTOM_PADDING = 2;
 const MONO_GLYPH_WIDTH = LABEL_FONT_SIZE * 0.62;
+const LABEL_WIDTH_SAFETY_PADDING = 12;
 
 const extensionToLanguage = new Map([
   ['.ts', 'TypeScript'],
@@ -87,6 +86,9 @@ const segmentStyles = [
   { kind: 'vertical', opacity: 0.72 },
   { kind: 'checker', opacity: 0.68 },
 ];
+
+const BAR_WIDTH = RECENT_LANG_BAR_CELLS * CELL_WIDTH;
+const SVG_WIDTH = Math.ceil(Math.max(BAR_WIDTH, estimateMaxSingleLineLabelWidth()));
 
 if (!USERNAME) {
   console.error('Missing username: set GITHUB_USERNAME or rely on GitHub Actions context');
@@ -213,8 +215,7 @@ function filterRecentRepos(repos) {
       }
 
       return typeof repo.default_branch === 'string' && repo.default_branch.trim().length > 0;
-    })
-    .slice(0, RECENT_LANG_REPO_LIMIT);
+    });
 }
 
 /**
@@ -223,7 +224,7 @@ function filterRecentRepos(repos) {
 async function listMatchingCommits(repo, cutoffIso, authoringIdentifiers, seenCommits, collected) {
   let page = 1;
 
-  while (collected.length < RECENT_LANG_COMMIT_LIMIT) {
+  while (true) {
     const url = new URL(`https://api.github.com/repos/${repo.full_name}/commits`);
     url.searchParams.set('sha', repo.default_branch);
     url.searchParams.set('since', cutoffIso);
@@ -250,10 +251,6 @@ async function listMatchingCommits(repo, cutoffIso, authoringIdentifiers, seenCo
         repo: repo.full_name,
         sha: commit.sha,
       });
-
-      if (collected.length >= RECENT_LANG_COMMIT_LIMIT) {
-        return;
-      }
     }
 
     if (commits.length < 100) {
@@ -290,10 +287,6 @@ async function collectLanguageTotals() {
 
   for (const repo of repos) {
     await listMatchingCommits(repo, cutoffIso, authoringIdentifiers, seenCommits, matchingCommits);
-
-    if (matchingCommits.length >= RECENT_LANG_COMMIT_LIMIT) {
-      break;
-    }
   }
 
   const totals = new Map();
@@ -397,6 +390,25 @@ function measureMonospaceText(text) {
 }
 
 /**
+ * Estimates the widest single-line label we can produce from the language mapping.
+ */
+function estimateMaxSingleLineLabelWidth() {
+  const separatorWidth = measureMonospaceText(' • ');
+  const tokens = Array.from(new Set(extensionToLanguage.values()))
+    .map(language => `${language} 100.0%`)
+    .sort((a, b) => measureMonospaceText(b) - measureMonospaceText(a))
+    .slice(0, RECENT_LANG_LIMIT);
+
+  if (tokens.length === 0) {
+    return BAR_WIDTH;
+  }
+
+  const contentWidth = tokens.reduce((sum, token) => sum + measureMonospaceText(token), 0);
+  const separatorsWidth = separatorWidth * Math.max(tokens.length - 1, 0);
+  return contentWidth + separatorsWidth + LABEL_WIDTH_SAFETY_PADDING;
+}
+
+/**
  * Converts recent-language items into preformatted label tokens.
  */
 function buildLabelTokens(items) {
@@ -479,10 +491,9 @@ function buildPatternDefs(theme) {
  * Renders the textured horizontal activity bar from the allocated cells.
  */
 function buildBar(items, cells, theme) {
-  const barWidth = RECENT_LANG_BAR_CELLS * CELL_WIDTH;
   const segments = [
-    `<rect x="${BAR_X}" y="${BAR_Y}" width="${barWidth}" height="${BAR_HEIGHT}" rx="${BAR_RADIUS}" fill="${theme.track}" />`,
-    `<rect x="${BAR_X}" y="${BAR_Y}" width="${barWidth}" height="${BAR_HEIGHT}" rx="${BAR_RADIUS}" fill="none" stroke="${theme.trackStroke}" stroke-width="1" />`,
+    `<rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_WIDTH}" height="${BAR_HEIGHT}" rx="${BAR_RADIUS}" fill="${theme.track}" />`,
+    `<rect x="${BAR_X}" y="${BAR_Y}" width="${BAR_WIDTH}" height="${BAR_HEIGHT}" rx="${BAR_RADIUS}" fill="none" stroke="${theme.trackStroke}" stroke-width="1" />`,
   ];
   let x = BAR_X;
 
@@ -509,7 +520,7 @@ function buildBar(items, cells, theme) {
  */
 function buildLabelLines(items, theme) {
   const tokens = buildLabelTokens(items);
-  const lines = wrapLabelLines(tokens, RECENT_LANG_BAR_CELLS * CELL_WIDTH);
+  const lines = wrapLabelLines(tokens, SVG_WIDTH);
   const labelTop = BAR_Y + BAR_HEIGHT + LABEL_TOP_GAP;
   const textLines = lines.map((line, index) => {
     const y = labelTop + (index * LABEL_LINE_HEIGHT);
@@ -548,7 +559,7 @@ function buildLabelLines(items, theme) {
  */
 function buildEmptySvg(theme) {
   return [
-    '<svg width="560" height="28" viewBox="0 0 560 28" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">',
+    `<svg width="${SVG_WIDTH}" height="28" viewBox="0 0 ${SVG_WIDTH} 28" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
     '  <title id="title">Recent languages</title>',
     `  <desc id="desc">No recent language activity found in the last ${RECENT_LANG_DAYS} days.</desc>`,
     '  <style>',
@@ -572,7 +583,7 @@ function buildSvg(items, theme) {
   const label = buildLabelLines(items, theme);
 
   return [
-    `<svg width="560" height="${label.height}" viewBox="0 0 560 ${label.height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
+    `<svg width="${SVG_WIDTH}" height="${label.height}" viewBox="0 0 ${SVG_WIDTH} ${label.height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">`,
     '  <title id="title">Recent languages</title>',
     `  <desc id="desc">Recently used languages over the last ${RECENT_LANG_DAYS} days: ${escapeXml(languagesDesc)}.</desc>`,
     '  <defs>',
@@ -608,7 +619,7 @@ function buildRecentLanguagesMarkup(items) {
   return [
     '<picture>',
     '  <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />',
-    '  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="560" align="top" />',
+    `  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="${SVG_WIDTH}" align="top" />`,
     '</picture>',
   ].join('\n');
 }
