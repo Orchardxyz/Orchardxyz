@@ -39,6 +39,6 @@
 <!-- START:recent-languages -->
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./assets/recent-languages-dark.svg" />
-  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="560" align="top" />
+  <img src="./assets/recent-languages-light.svg" alt="Recently used languages" width="734" align="top" />
 </picture>
 <!-- END:recent-languages -->
