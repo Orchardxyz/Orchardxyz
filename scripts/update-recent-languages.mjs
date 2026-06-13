@@ -46,7 +46,6 @@ const extensionToLanguage = new Map([
   ['.less', 'CSS'],
   ['.html', 'HTML'],
   ['.htm', 'HTML'],
-  ['.vue', 'Vue'],
   ['.rs', 'Rust'],
   ['.go', 'Go'],
   ['.swift', 'Swift'],
