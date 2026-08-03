@@ -1,6 +1,6 @@
 <svg width="734" height="50" viewBox="0 0 734 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Recent languages</title>
-  <desc id="desc">Recently used languages over the last 60 days: TypeScript 88.0%, JavaScript 6.8%, CSS 4.5%, Python 0.6%, HTML 0.1%.</desc>
+  <desc id="desc">Recently used languages over the last 60 days: TypeScript 87.5%, JavaScript 7.1%, CSS 4.7%, Python 0.6%, HTML 0.1%.</desc>
   <defs>
   <pattern id="pattern-diagonal" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
     <rect width="8" height="8" fill="#4b5563" fill-opacity="0.9" />
@@ -39,5 +39,5 @@
   <rect x="420" y="6" width="42" height="16" fill="url(#pattern-dots)" fill-opacity="1" />
   <rect x="462" y="6" width="21" height="16" fill="url(#pattern-grid)" fill-opacity="1" />
   <rect x="483" y="6" width="21" height="16" fill="url(#pattern-vertical)" fill-opacity="1" />
-  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">TypeScript </tspan><tspan class="percent">88.0%</tspan><tspan class="separator"> • </tspan><tspan class="label">JavaScript </tspan><tspan class="percent">6.8%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">4.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">Python </tspan><tspan class="percent">0.6%</tspan><tspan class="separator"> • </tspan><tspan class="label">HTML </tspan><tspan class="percent">0.1%</tspan></text>
+  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">TypeScript </tspan><tspan class="percent">87.5%</tspan><tspan class="separator"> • </tspan><tspan class="label">JavaScript </tspan><tspan class="percent">7.1%</tspan><tspan class="separator"> • </tspan><tspan class="label">CSS </tspan><tspan class="percent">4.7%</tspan><tspan class="separator"> • </tspan><tspan class="label">Python </tspan><tspan class="percent">0.6%</tspan><tspan class="separator"> • </tspan><tspan class="label">HTML </tspan><tspan class="percent">0.1%</tspan></text>
 </svg>
