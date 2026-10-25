@@ -1,6 +1,6 @@
 <svg width="734" height="50" viewBox="0 0 734 50" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Recent languages</title>
-  <desc id="desc">Recently used languages over the last 60 days: TypeScript 68.1%, JavaScript 31.9%.</desc>
+  <desc id="desc">Recently used languages over the last 60 days: TypeScript 75.3%, JavaScript 24.7%.</desc>
   <defs>
   <pattern id="pattern-diagonal" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
     <rect width="8" height="8" fill="#8b949e" fill-opacity="0.9" />
@@ -34,7 +34,7 @@
   </style>
   <rect x="0" y="6" width="504" height="16" rx="3" fill="#30363d" />
   <rect x="0" y="6" width="504" height="16" rx="3" fill="none" stroke="#3f444c" stroke-width="1" />
-  <rect x="0" y="6" width="336" height="16" fill="#8b949e" fill-opacity="0.96" />
-  <rect x="336" y="6" width="168" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
-  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">TypeScript </tspan><tspan class="percent">68.1%</tspan><tspan class="separator"> • </tspan><tspan class="label">JavaScript </tspan><tspan class="percent">31.9%</tspan></text>
+  <rect x="0" y="6" width="378" height="16" fill="#8b949e" fill-opacity="0.96" />
+  <rect x="378" y="6" width="126" height="16" fill="url(#pattern-diagonal)" fill-opacity="1" />
+  <text x="0" y="33" class="label-line" dominant-baseline="hanging" xml:space="preserve"><tspan class="label">TypeScript </tspan><tspan class="percent">75.3%</tspan><tspan class="separator"> • </tspan><tspan class="label">JavaScript </tspan><tspan class="percent">24.7%</tspan></text>
 </svg>
