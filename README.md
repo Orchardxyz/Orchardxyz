@@ -8,24 +8,24 @@
 <p>
    <span>
      <picture>
-       <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/mdi:web.svg?color=%23E5E7EB" />
-       <img src="https://api.iconify.design/mdi:web.svg?color=%23111827" alt="Website" width="16" height="16" align="absmiddle" />
+       <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/mdi/web.svg?color=%23E5E7EB" />
+       <img src="https://api.iconify.design/mdi/web.svg?color=%23111827" alt="Website" width="16" height="16" align="absmiddle" />
      </picture>
      <a href="https://oryz.work/" aria-label="Personal website">me</a>
    </span>
    <span style="margin:0 4px">·</span>
    <span>
      <picture>
-       <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/mdi:github.svg?color=%23E5E7EB" />
-       <img src="https://api.iconify.design/mdi:github.svg?color=%23111827" alt="GitHub" width="16" height="16" align="absmiddle" />
+       <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/mdi/github.svg?color=%23E5E7EB" />
+       <img src="https://api.iconify.design/mdi/github.svg?color=%23111827" alt="GitHub" width="16" height="16" align="absmiddle" />
      </picture>
      <a href="https://github.com/Orchardxyz" aria-label="GitHub profile">orchardxyz</a>
    </span>
    <span style="margin:0 4px">·</span>
    <span>
      <picture>
-       <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/mdi:email-outline.svg?color=%23E5E7EB" />
-       <img src="https://api.iconify.design/mdi:email-outline.svg?color=%23111827" alt="Email" width="16" height="16" align="absmiddle" />
+       <source media="(prefers-color-scheme: dark)" srcset="https://api.iconify.design/mdi/email-outline.svg?color=%23E5E7EB" />
+       <img src="https://api.iconify.design/mdi/email-outline.svg?color=%23111827" alt="Email" width="16" height="16" align="absmiddle" />
      </picture>
      <a href="mailto:orchardyz@outlook.com" aria-label="Email Orchardxyz">orchardyz@outlook.com</a>
    </span>
