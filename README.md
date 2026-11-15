@@ -35,12 +35,13 @@
 
 <!-- START:frameworks -->
 <p>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=astro&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=astro&amp;theme=light" alt="Astro" title="Astro" width="40" height="40" /></picture>
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=react&amp;theme=light" alt="React" title="React" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=astro&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=astro&amp;theme=light" alt="Astro" title="Astro" width="40" height="40" /></picture>
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=svelte&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=svelte&amp;theme=light" alt="Svelte" title="Svelte" width="40" height="40" /></picture>
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=vue&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=vue&amp;theme=light" alt="Vue" title="Vue" width="40" height="40" /></picture>
   <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/framework-hono-dark.svg" /><img src="./assets/framework-hono-light.svg" alt="Hono" title="Hono" width="40" height="40" /></picture>
   <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=nextjs&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=nextjs&amp;theme=light" alt="Next.js" title="Next.js" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=tauri&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=tauri&amp;theme=light" alt="Tauri" title="Tauri" width="40" height="40" /></picture>
 </p>
 <!-- END:frameworks -->
 

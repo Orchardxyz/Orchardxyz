@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { authoredBy, mergedForkContributions } from './merged-fork-contributions.mjs';
 
 const TOKEN = process.env.PERSONAL_GH_TOKEN || process.env.GITHUB_TOKEN || '';
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR || '';
@@ -48,6 +49,7 @@ export const FRAMEWORKS = [
   { name: 'Actix Web', icon: 'actix', rust: ['actix-web'] },
   { name: 'Axum', rust: ['axum'] },
   { name: 'Rocket', icon: 'rocket', rust: ['rocket'] },
+  { name: 'Tauri', icon: 'tauri', rust: ['tauri'] },
   { name: 'Laravel', icon: 'laravel', php: ['laravel/framework'] },
   { name: 'Symfony', icon: 'symfony', php: ['symfony/framework-bundle'] },
   { name: 'Rails', icon: 'rails', ruby: ['rails'] },
@@ -252,6 +254,26 @@ export function rankFrameworks(score, limit = LIMIT) {
   return [...score].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, Math.min(8, limit)).map(([name]) => name);
 }
 
+async function scoreActiveProjects(repo, changed, projectName, projectScores) {
+  const manifests = await repoManifests(repo);
+  const activeDirs = activeProjectDirectories(changed, manifests.map(item => item.path));
+  for (const dir of activeDirs) {
+    const found = new Set();
+    for (const manifest of manifests.filter(item => path.posix.dirname(item.path) === dir)) {
+      try {
+        for (const name of detectFrameworks(manifest.path, await blobText(repo, manifest.sha))) found.add(name);
+      } catch (error) {
+        console.warn(`Skipping ${repo.full_name}/${manifest.path}: ${error.message}`);
+      }
+    }
+    const projectKey = `${projectName.toLowerCase()}:${dir}`;
+    for (const name of found) {
+      if (!projectScores.has(name)) projectScores.set(name, new Set());
+      projectScores.get(name).add(projectKey);
+    }
+  }
+}
+
 async function main() {
   if (!TOKEN || !USERNAME) throw new Error('Set PERSONAL_GH_TOKEN (or GITHUB_TOKEN) and GITHUB_USERNAME');
   if (!Number.isInteger(DAYS) || DAYS < 1 || !Number.isInteger(LIMIT) || LIMIT < 1) throw new Error('Invalid framework window or limit');
@@ -259,25 +281,32 @@ async function main() {
   const since = new Date(Date.now() - DAYS * 86400000).toISOString();
   const repos = (await paged('https://api.github.com/user/repos?affiliation=owner&visibility=all&sort=updated'))
     .filter(repo => !repo.fork && repo.size > 0 && repo.default_branch && repo.pushed_at >= since);
-  const score = new Map();
+  const projectScores = new Map();
   for (const repo of repos) {
     const activity = await repoActivity(repo, since, authors);
     if (!activity.own.length) continue;
     console.log(`Scanning ${repo.full_name}: ${activity.own.length} authored commits`);
-    const manifests = await repoManifests(repo);
-    const activeDirs = activeProjectDirectories(activity.changed, manifests.map(item => item.path));
-    for (const dir of activeDirs) {
-      const found = new Set();
-      for (const manifest of manifests.filter(item => path.posix.dirname(item.path) === dir)) {
-        try {
-          for (const name of detectFrameworks(manifest.path, await blobText(repo, manifest.sha))) found.add(name);
-        } catch (error) {
-          console.warn(`Skipping ${repo.full_name}/${manifest.path}: ${error.message}`);
-        }
-      }
-      for (const name of found) score.set(name, (score.get(name) || 0) + 1);
-    }
+    await scoreActiveProjects(repo, activity.changed, repo.full_name, projectScores);
   }
+
+  const mergedForkCommits = await mergedForkContributions({
+    githubFetch: githubJson,
+    username: USERNAME,
+    since,
+    matchesAuthor: commit => authoredBy(commit, authors),
+  });
+  const upstream = new Map();
+  for (const contribution of mergedForkCommits) {
+    const name = contribution.repo.full_name;
+    if (!upstream.has(name)) upstream.set(name, { repo: contribution.repo, changed: new Set() });
+    for (const file of contribution.files) upstream.get(name).changed.add(file.filename);
+  }
+  for (const { repo, changed } of upstream.values()) {
+    console.log(`Scanning merged fork contributions in ${repo.full_name}`);
+    await scoreActiveProjects(repo, [...changed], repo.full_name, projectScores);
+  }
+
+  const score = new Map([...projectScores].map(([name, projects]) => [name, projects.size]));
   const names = rankFrameworks(score);
   for (const file of await fs.readdir(ASSETS)) {
     if (/^framework-.*-(light|dark)\.svg$/.test(file)) await fs.unlink(path.join(ASSETS, file));

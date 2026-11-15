@@ -2,6 +2,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { authoredBy, mergedForkContributions } from './merged-fork-contributions.mjs';
 
 const PERSONAL_TOKEN = process.env.PERSONAL_GH_TOKEN || '';
 const TOKEN = PERSONAL_TOKEN || process.env.GITHUB_TOKEN || '';
@@ -232,30 +233,15 @@ async function listMatchingCommits(repo, cutoffIso, authoringIdentifiers, seenCo
 
     const commits = await githubFetch(url.toString());
 
-    if (commits.length === 0) {
-      break;
-    }
+    if (commits.length === 0) break;
 
     for (const commit of commits) {
-      if (!commitMatchesAuthoring(commit, authoringIdentifiers)) {
-        continue;
-      }
-
-      if (seenCommits.has(commit.sha)) {
-        continue;
-      }
-
+      if (!commitMatchesAuthoring(commit, authoringIdentifiers) || seenCommits.has(commit.sha)) continue;
       seenCommits.add(commit.sha);
-      collected.push({
-        repo: repo.full_name,
-        sha: commit.sha,
-      });
+      collected.push({ repo: repo.full_name, sha: commit.sha });
     }
 
-    if (commits.length < 100) {
-      break;
-    }
-
+    if (commits.length < 100) break;
     page += 1;
   }
 }
@@ -288,10 +274,18 @@ async function collectLanguageTotals() {
     await listMatchingCommits(repo, cutoffIso, authoringIdentifiers, seenCommits, matchingCommits);
   }
 
+  const mergedForkCommits = await mergedForkContributions({
+    githubFetch,
+    username: USERNAME,
+    since: cutoffIso,
+    matchesAuthor: commit => authoredBy(commit, authoringIdentifiers),
+    seenShas: seenCommits,
+  });
+
   const totals = new Map();
 
-  for (const commitRef of matchingCommits) {
-    const detail = await githubFetch(`https://api.github.com/repos/${commitRef.repo}/commits/${commitRef.sha}`);
+  for (const commitRef of [...matchingCommits, ...mergedForkCommits]) {
+    const detail = commitRef.files ? commitRef : await githubFetch(`https://api.github.com/repos/${commitRef.repo}/commits/${commitRef.sha}`);
 
     for (const file of detail.files || []) {
       const language = languageFromFilename(file.filename);
@@ -306,7 +300,7 @@ async function collectLanguageTotals() {
   }
 
   return {
-    matchingCommitCount: matchingCommits.length,
+    matchingCommitCount: matchingCommits.length + mergedForkCommits.length,
     totals,
   };
 }

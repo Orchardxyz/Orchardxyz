@@ -15,7 +15,7 @@ test('recognizes direct dependencies in non-JavaScript manifests', () => {
     ['requirements.txt', 'Flask==3\n# django==5', ['Flask']],
     ['pom.xml', '<dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-web</artifactId></dependency>', ['Spring Boot']],
     ['go.mod', 'require (\n github.com/gin-gonic/gin v1.0.0\n github.com/labstack/echo/v4 v4.0.0 // indirect\n)', ['Gin']],
-    ['Cargo.toml', '[dependencies]\naxum = "0.8"\nactix-web = "4"', ['Actix Web', 'Axum']],
+    ['Cargo.toml', '[build-dependencies]\ntauri-build = "2"\n[dependencies]\naxum = "0.8"\nactix-web = "4"\ntauri = "2"', ['Actix Web', 'Axum', 'Tauri']],
     ['composer.json', '{"require":{"laravel/framework":"^12"}}', ['Laravel']],
     ['Gemfile', 'gem "rails", "~> 8"', ['Rails']],
     ['app.csproj', '<Project Sdk="Microsoft.NET.Sdk.Web"></Project>', ['ASP.NET Core']],
@@ -23,6 +23,7 @@ test('recognizes direct dependencies in non-JavaScript manifests', () => {
     ['pubspec.yaml', 'dependencies:\n  flutter:\n    sdk: flutter', ['Flutter']],
   ];
   for (const [filename, content, expected] of cases) assert.deepEqual(detectFrameworks(filename, content), expected, filename);
+  assert.deepEqual(detectFrameworks('Cargo.toml', '[build-dependencies]\ntauri-build = "2"'), []);
 });
 
 test('attributes changed files to the closest manifest in a monorepo', () => {
