@@ -7,7 +7,7 @@ import { authoredBy, mergedForkContributions } from './merged-fork-contributions
 const PERSONAL_TOKEN = process.env.PERSONAL_GH_TOKEN || '';
 const TOKEN = PERSONAL_TOKEN || process.env.GITHUB_TOKEN || '';
 const USERNAME = process.env.GITHUB_USERNAME || process.env.GITHUB_REPOSITORY_OWNER || process.env.GITHUB_ACTOR;
-const RECENT_LANG_DAYS = Number(process.env.RECENT_LANG_DAYS || 60);
+const RECENT_LANG_DAYS = Number(process.env.RECENT_LANG_DAYS || 90);
 const RECENT_LANG_LIMIT = Number(process.env.RECENT_LANG_LIMIT || 6);
 const RECENT_LANG_MIN_PERCENT = Number(process.env.RECENT_LANG_MIN_PERCENT || 0.1);
 const RECENT_LANG_BAR_CELLS = Number(process.env.RECENT_LANG_BAR_CELLS || 24);
