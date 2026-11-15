@@ -31,16 +31,18 @@
    </span>
 </p>
 
-<sub>▸ Skills</sub>
+<sub>▸ Frameworks</sub>
 
+<!-- START:frameworks -->
 <p>
-  <a href="https://skillicons.dev">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=dark" />
-      <img src="https://skillicons.dev/icons?i=react%2Cts%2Cjs%2Cvue%2Chtml%2Ccss&amp;theme=light" alt="Skills: React, TypeScript, JavaScript, Vue, HTML, CSS" width="240" />
-    </picture>
-  </a>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=astro&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=astro&amp;theme=light" alt="Astro" title="Astro" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=react&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=react&amp;theme=light" alt="React" title="React" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=svelte&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=svelte&amp;theme=light" alt="Svelte" title="Svelte" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=vue&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=vue&amp;theme=light" alt="Vue" title="Vue" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="./assets/framework-hono-dark.svg" /><img src="./assets/framework-hono-light.svg" alt="Hono" title="Hono" width="40" height="40" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://skillicons.dev/icons?i=nextjs&amp;theme=dark" /><img src="https://skillicons.dev/icons?i=nextjs&amp;theme=light" alt="Next.js" title="Next.js" width="40" height="40" /></picture>
 </p>
+<!-- END:frameworks -->
 
 <sub>▸ Recent languages</sub>
 
